@@ -12,9 +12,9 @@ closeness) and the assistant recommends suitable games with how-to-play instruct
 grounded in retrieved passages from the book (RAG).
 
 ## How it works
-1. `src/ingest.py` extracts text from the PDF, splits it into chunks, embeds them locally
+1. `ingest.py` extracts text from the PDF, splits it into chunks, embeds them locally
    (multilingual sentence-transformers) and saves an index.
-2. `src/ask.py` embeds the question, retrieves the top chunks and asks an LLM to answer
+2. `ask.py` embeds the question, retrieves the top chunks and asks an LLM to answer
    using only those chunks, citing page numbers.
 
 ## Setup
@@ -23,13 +23,15 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export ANTHROPIC_API_KEY=...        # never commit this
 ```
-Put the book PDF at `data/book.pdf` (not included in this repo for copyright reasons).
+Create a `data` folder and put the book PDF at `data/book.pdf` (not included in this
+repo for copyright reasons).
 
 ```bash
-python src/ingest.py
-python src/ask.py "เกมละลายพฤติกรรม 40 คน ใช้เวลา 15 นาที"
+python ingest.py
+python ask.py "เกมละลายพฤติกรรม 40 คน ใช้เวลา 15 นาที"
 ```
 
-## Evaluation idea
-Compare answers with and without the book: does the model invent games, and are the
-cited pages correct?
+## Known limitation
+The PDF's embedded Thai font is encoded non-standardly, so plain text extraction loses
+some vowels/tone marks and returns nothing for about 55 of 182 pages. OCR would be
+needed for full coverage.
