@@ -3,7 +3,7 @@ import numpy as np
 import anthropic
 from sentence_transformers import SentenceTransformer
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+ROOT = pathlib.Path(__file__).resolve().parent
 MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
 
 question = " ".join(sys.argv[1:])
